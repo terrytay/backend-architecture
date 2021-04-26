@@ -1,10 +1,11 @@
 import express, {NextFunction, Request, Response} from "express";
-import {StatusCodes} from "http-status-codes";
 import bodyParser from "body-parser";
 import errorHandler from "errorhandler";
 import {loggingMiddleware} from "./middleware/logging";
 import Controller from "controller.interface";
 import logger from "./util/logger";
+import {authenticateToken, generateAccessToken} from "./middleware/auth";
+import {StatusCodes} from "http-status-codes";
 
 class App {
   private app: express.Application;
@@ -14,7 +15,13 @@ class App {
     this.app = express();
 
     this.app.get("/", function(request: Request, response: Response, next: NextFunction) {
-      response.sendStatus(StatusCodes.OK);
+      try {
+        const token = generateAccessToken("testing");
+        response.send(token);
+      } catch (error) {
+        logger.info("Unable to generate access token");
+        response.send(StatusCodes.BAD_REQUEST);
+      }
     });
 
     this.initializeMiddlewares();
@@ -49,6 +56,8 @@ class App {
     // this.app.use(bodyParser.urlencoded({extended: true}));
     // this.app.use(lusca.xframe("SAMEORIGIN"));
     // this.app.use(lusca.xssProtection(true));
+
+    this.app.use(authenticateToken);
   }
 
   private initializeControllers(controllers: Controller[]) {

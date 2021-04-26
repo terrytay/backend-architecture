@@ -1,4 +1,5 @@
 import Controller from "controller.interface";
+import GenericResponse from "response.interface";
 import {NextFunction, Request, Response, Router} from "express";
 import {StatusCodes} from "http-status-codes";
 import logger from "../util/logger";
