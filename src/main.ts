@@ -2,6 +2,7 @@ import path from "path";
 import {config} from "dotenv";
 import {exit} from "shelljs";
 import {initApp} from "./server";
+import logger from "./util/logger";
 
 loadConfig();
 
@@ -11,7 +12,8 @@ try {
 
   initApp();
 
-} catch (error) {
+} catch (e) {
+  logger.error("failed to connect to db: ", e);
   process.exit(1);
 }
 
