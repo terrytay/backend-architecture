@@ -3,14 +3,30 @@ import {config} from "dotenv";
 import {exit} from "shelljs";
 import {initApp} from "./server";
 import logger from "./util/logger";
+import {DBClient} from "./db/client";
+import {DBConfig, DBType} from "./db/config";
 
 loadConfig();
 
 try {
-  //TODO: Initialize dbClient here
-  //TODO: Initialize app upon promise resolve of dbClient initialization
+  const dbClient = new DBClient(
+    new DBConfig(
+      DBType.POSTGRES,
+      process.env.DB_HOST,
+      process.env.DB_DATABASE,
+      +process.env.DB_PORT,
+      process.env.DB_USERNAME,
+      process.env.DB_PASSWORD,
+      __dirname + "/entities/*.{js.ts}"
+    )
+  );
+  const result = dbClient.initialise().then(() => {
+    logger.info("connection to db established successfully");
 
-  initApp();
+    initApp(dbClient);
+  }).catch(error => {
+    throw error;
+  });
 
 } catch (e) {
   logger.error("failed to connect to db: ", e);

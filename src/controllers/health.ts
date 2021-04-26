@@ -20,7 +20,6 @@ export class HealthController implements Controller {
   public router = Router({strict: true});
 
   constructor() {
-    logger.info("HIIHHI");
     this.initializeRoutes();
   }
 

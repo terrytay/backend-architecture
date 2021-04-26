@@ -1,6 +1,7 @@
 import App from "./app";
 import Controller from "controller.interface";
 import {HealthController} from "./controllers/health";
+import {IDBClient} from "./db/client";
 
 interface IRepositories {
 
@@ -10,7 +11,7 @@ interface IServices {
 
 }
 
-function getRepositories(): IRepositories {
+function getRepositories(dbClient: IDBClient): IRepositories {
   return {
     
   };
@@ -28,9 +29,9 @@ function getControllers(services: IServices): Controller[] {
   ];
 }
 
-export function initApp(): void {
+export function initApp(dbClient: IDBClient): void {
   //TODO: DB later
-  const repositories = getRepositories();
+  const repositories = getRepositories(dbClient);
   const services = getServices(repositories);
   const controllers = getControllers(services);
 
