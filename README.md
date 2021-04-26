@@ -14,7 +14,7 @@ Special thanks to [Abhinav](https://www.linkedin.com/in/abhinav-kumar-53475978/)
 ---
 - Clone the repository
 
-        git clone https://github.com/terrytay/backend-architecure.git
+        git clone https://github.com/terrytay/backend-architecture.git
 
 - Install dependencies
   
