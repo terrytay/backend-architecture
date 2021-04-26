@@ -4,6 +4,7 @@ import {HealthController} from "./controllers/health";
 import {IDBClient} from "./db/client";
 import {IUserRepository, UserRepository} from "./repositories/user";
 import {IUserService, UserService} from "./services/user";
+import {UserController} from "./controllers/user";
 
 interface IRepositories {
   userRepository: IUserRepository
@@ -28,6 +29,7 @@ function getServices(repos: IRepositories): IServices {
 function getControllers(services: IServices): Controller[] {
   return [
     new HealthController(),
+    new UserController(services.userService)
   ];
 }
 
