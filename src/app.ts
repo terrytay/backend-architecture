@@ -57,7 +57,7 @@ class App {
     // this.app.use(lusca.xframe("SAMEORIGIN"));
     // this.app.use(lusca.xssProtection(true));
 
-    this.app.use(authenticateToken);
+    // this.app.use(authenticateToken);
   }
 
   private initializeControllers(controllers: Controller[]) {

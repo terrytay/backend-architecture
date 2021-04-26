@@ -14,12 +14,12 @@ export class User {
   }
 }
 
-@Entity("user")
+@Entity("users")
 export class UserDTO {
-  @PrimaryColumn({type: "character varying", name: "username"})
+  @PrimaryColumn("character varying", {name: "username"})
   username: string;
 
-  @Column({type: "character varying", name: "password"})
+  @Column("character varying", {name: "password"})
   passwordHash: string;
 
   constructor(username: string, passwordHash: string) {

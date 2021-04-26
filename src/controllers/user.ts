@@ -21,21 +21,23 @@ class UserResponse implements GenericResponse {
 }
 
 export class UserController implements Controller {
-  path = "/user";
-  router = Router();
+  public path = "/user";
+  public router = Router();
 
   userService: IUserService;
 
   constructor(userService: IUserService) {
     this.userService = userService;
+
+    this.initializeRoutes();
   }
 
   public initializeRoutes(): void {
-    this.router.get(`${this.path}/:user`, this.get);
+    this.router.get(`${this.path}/:username`, this.get);
   }
 
   private get = async (request: Request, response: Response, next: NextFunction) => {
-    const { username } = request.params;
+    const username = request.params["username"];
 
     let user: User;
     let userResponse: UserResponse;
@@ -43,21 +45,23 @@ export class UserController implements Controller {
       user = await this.userService.getUser(username);
       userResponse = new UserResponse(true, "OK", Date.now(), user);
     } catch (e) {
-      userResponse = new UserResponse(false, e.message, Date.now(), null);
+      logger.error(e);
+      userResponse = new UserResponse(false, "Error retrieving from repo", Date.now(), null);
       response.send(userResponse);
+      return;
     }
 
     try {
       response.send(userResponse);
     } catch (e) {
       UserController.sendError(e, userResponse, response);
+      return;
     }
 
   }
 
   private static sendError(e: Error, message: UserResponse, response: Response) {
     logger.error("error sending user response: ", e);
-    message.message = e.message;
     response.sendStatus(StatusCodes.SERVICE_UNAVAILABLE);
   }
 }

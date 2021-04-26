@@ -17,9 +17,10 @@ try {
       +process.env.DB_PORT,
       process.env.DB_USERNAME,
       process.env.DB_PASSWORD,
-      __dirname + "/entities/*.{js.ts}"
+      __dirname + "/entities/*.js"
     )
   );
+
   const result = dbClient.initialise().then(() => {
     logger.info("connection to db established successfully");
 
