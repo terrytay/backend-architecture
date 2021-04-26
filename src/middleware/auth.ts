@@ -27,7 +27,7 @@ export function authenticateToken(request: Request, response: Response, next: Ne
   }
 
   jwt.verify(token, process.env.TOKEN_SECRET as string, (error: VerifyErrors, decoded: any) => {
-  logger.info(token);
+
     if (error != null) {
       logger.error("Invalid authentication, jwt verification failed");
       const authResponse = new AuthResponse(false, StatusCodes.FORBIDDEN.toLocaleString(), Date.now());
