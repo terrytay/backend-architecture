@@ -7,6 +7,8 @@ For starters, do consider going to [Microsoft Typescript Node Starter](https://g
 This project was created to be able to scaffold backend servers quickly. Clean architecture has been used extensively.
 Let me know in the issues if there are things which can be improved on.
 
+Special thanks to [Abhinav](https://www.linkedin.com/in/abhinav-kumar-53475978/) for the guidance and support.
+
 ## Getting started
 
 ---
@@ -38,4 +40,13 @@ Let me know in the issues if there are things which can be improved on.
 Take not that package.json is not fully configured for production yet. Use with caution.
 
 
-Special thanks to [Abhinav](https://www.linkedin.com/in/abhinav-kumar-53475978/) for the guidance and support. 
+## Health Status
+
+---
+
+Often time, we need to check the health status, especially when using in K8s.
+This application has health check configured.
+
+```http request
+curl -GET http://localhost:3000/health
+```
